@@ -38,6 +38,7 @@ public class MRecordClientHandler extends
 			MPro.me().setValue("lastsyn", MDate.get_ymd());
 		}else{
 			MPrint.print(msg.get("MSG"));//出错原因
+			Log.me().write(msg.getStr("MSG"));
 		}
 		
 	}
@@ -116,7 +117,6 @@ public class MRecordClientHandler extends
 	@Override
 	protected void endMessageReceived(ChannelHandlerContext ctx)
 			throws Exception {
-		MPrint.print("endMessageReceived");
 		MPrint.print("启动下载远程图片线程");
 		Log.me().write("启动下载远程图片线程");
 		Thread thread=new downPicThread();//下载远程图片线程
@@ -169,7 +169,6 @@ public class MRecordClientHandler extends
 					try {
 						isOK = MDown.saveUrlAs(imgUrl,full_path);
 					} catch (Exception e) {
-//						e.printStackTrace();
 						MPrint.print(e.getMessage());
 					}									//保存圖片
 					if(isOK){
@@ -179,7 +178,7 @@ public class MRecordClientHandler extends
 						//如果没有取到图片,则不更新
 //						M.me().delete(table,MCnt.me().first_eq("id", tempRe.getStr("id")).toStr());
 //					}
-					Log.me().write("是否下载成功..="+isOK);
+					Log.me().write("是否下载成功..= "+isOK+" 下载文件路径 :"+imgUrl);
 				}
 //				else{//有些表没有图片操作,则直接删除
 					//M.me().delete(table,MCnt.me().first_eq("id", tempRe.getStr("id")).toStr());
